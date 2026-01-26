@@ -1,0 +1,35 @@
+.owner-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 220px;
+  background: #1e293b;
+  color: white;
+  padding: 20px;
+}
+
+.sidebar h2 {
+  margin-bottom: 20px;
+}
+
+.sidebar a {
+  display: block;
+  padding: 10px;
+  color: #cbd5f5;
+  text-decoration: none;
+  border-radius: 6px;
+  margin-bottom: 8px;
+}
+
+.sidebar a.active {
+  background: #4f46e5;
+  color: white;
+}
+
+.content {
+  flex: 1;
+  padding: 20px;
+  background: #f8fafc;
+}

@@ -1,0 +1,414 @@
+ *{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  padding: 20px;
+}
+/* ================== LIGHT BACKGROUND FOR WELCOME ================== */
+.outlet-owner-container .welcome-box {
+  text-align: center;
+  padding: 20px 25px;
+  border-radius: 12px;
+  background: #f0f4ff; /* light pastel background */
+  border: 1px solid #c7d2fe;
+  margin-bottom: 30px;
+}
+
+/* Gradient style for the outlet name inside welcome */
+.outlet-owner-container .welcome-box .outlet-name {
+  font-weight: 700;
+  font-size: 1.5rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+/* ========== SHARED CONTAINER ========== */
+.create-outlet-container,
+.outlet-owner-container {
+  max-width: 950px;
+  margin: 0 auto;
+  padding: 45px;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+  animation: fadeInUp 0.5s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ========== HEADINGS ========== */
+.create-outlet-container h2,
+.outlet-owner-container h2 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #1a202c;
+  margin-bottom: 10px;
+  text-align: center;
+  letter-spacing: -0.5px;
+}
+
+.outlet-owner-container h2 {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 750;
+}
+
+.create-outlet-container h3 {
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: #4a5568;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.outlet-owner-container > p {
+  text-align: center;
+  color: #4a5568;
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-bottom: 35px;
+  padding: 18px 30px;
+  background: linear-gradient(135deg, #f0f4ff 0%, #e6ecff 100%);
+  border-radius: 12px;
+  border: 2px solid #c7d2fe;
+}
+
+.outlet-owner-container h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #2d3748;
+  margin: 35px 0 20px;
+  padding-left: 16px;
+  border-left: 5px solid #667eea;
+}
+
+/* ========== FORMS ========== */
+.create-outlet-container form,
+.outlet-owner-container form {
+  display: grid;
+  gap: 16px;
+  padding: 28px;
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  border-radius: 14px;
+  border: 2px solid #e2e8f0;
+  margin-bottom: 35px;
+}
+
+/* ========== INPUTS ========== */
+.create-outlet-container input,
+.outlet-owner-container input[type="text"],
+.outlet-owner-container input[type="number"],
+.outlet-owner-container input[type="time"],
+.outlet-owner-container input:not([type]) {
+  width: 100%;
+  padding: 14px 18px;
+  border: 2px solid #cbd5e0;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #2d3748;
+  background: white;
+  transition: all 0.2s ease;
+}
+
+.create-outlet-container input:focus,
+.outlet-owner-container input[type="text"]:focus,
+.outlet-owner-container input[type="number"]:focus,
+.outlet-owner-container input[type="time"]:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.12);
+  transform: translateY(-1px);
+}
+
+.create-outlet-container input::placeholder,
+.outlet-owner-container input::placeholder {
+  color: #a0aec0;
+  font-weight: 400;
+}
+
+/* ========== CHECKBOX ========== */
+.outlet-owner-container label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  background: white;
+  border-radius: 10px;
+  border: 2px solid #cbd5e0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 600;
+  color: #2d3748;
+  font-size: 1rem;
+}
+
+.outlet-owner-container label:hover {
+  border-color: #667eea;
+  background: #f7fafc;
+}
+
+.outlet-owner-container input[type="checkbox"] {
+  width: 22px;
+  height: 22px;
+  cursor: pointer;
+  accent-color: #667eea;
+}
+
+/* ========== FORM SUBMIT BUTTON ========== */
+.create-outlet-container button[type="submit"],
+.outlet-owner-container form button[type="submit"] {
+  width: 100%;
+  padding: 16px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.35);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: 6px;
+}
+
+.create-outlet-container button[type="submit"]:hover,
+.outlet-owner-container form button[type="submit"]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.45);
+}
+
+.create-outlet-container button[type="submit"]:active,
+.outlet-owner-container form button[type="submit"]:active {
+  transform: translateY(0);
+}
+
+/* ========== MENU ITEMS LIST ========== */
+.outlet-owner-container ul {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 14px;
+  margin-top: 25px;
+}
+
+.outlet-owner-container li {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  gap: 15px;
+  padding: 20px 24px;
+  background: white;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  transition: all 0.25s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  font-size: 1.1rem;
+  font-weight: 650;
+  color: #1a202c;
+}
+
+.outlet-owner-container li:hover {
+  border-color: #667eea;
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.15);
+  transform: translateY(-2px);
+}
+
+/* Action Buttons Container */
+.outlet-owner-container li button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+/* Edit Button - Violet Blue Theme */
+.outlet-owner-container li button:first-of-type {
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  color: white;
+  box-shadow: 0 3px 10px rgba(99, 102, 241, 0.3);
+}
+
+.outlet-owner-container li button:first-of-type:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(99, 102, 241, 0.4);
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+}
+
+/* Delete Button - Deep Violet Theme */
+.outlet-owner-container li button:last-of-type {
+  background: linear-gradient(135deg, #7c3aed 0%, #6b21a8 100%);
+  color: white;
+  box-shadow: 0 3px 10px rgba(124, 58, 237, 0.3);
+}
+
+.outlet-owner-container li button:last-of-type:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(124, 58, 237, 0.4);
+  background: linear-gradient(135deg, #6b21a8 0%, #581c87 100%);
+}
+
+.outlet-owner-container li button:active {
+  transform: translateY(0);
+}
+
+/* Empty State */
+.outlet-owner-container > p:last-of-type {
+  text-align: center;
+  color: #718096;
+  font-size: 1.15rem;
+  font-weight: 500;
+  padding: 50px 30px;
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  border-radius: 12px;
+  border: 2px dashed #cbd5e0;
+  margin-top: 20px;
+}
+
+/* ========== LOADING STATE ========== */
+body > h2 {
+  text-align: center;
+  color: white;
+  margin-top: 120px;
+  font-size: 2.5rem;
+  font-weight: 700;
+  animation: pulse 1.5s ease-in-out infinite;
+  text-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.65;
+    transform: scale(1.05);
+  }
+}
+
+/* ========== RESPONSIVE DESIGN ========== */
+@media (max-width: 992px) {
+  .create-outlet-container,
+  .outlet-owner-container {
+    padding: 35px 25px;
+  }
+
+  .outlet-owner-container h2 {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  body {
+    padding: 15px;
+  }
+
+  .create-outlet-container,
+  .outlet-owner-container {
+    padding: 30px 20px;
+  }
+
+  .outlet-owner-container h2 {
+    font-size: 1.7rem;
+  }
+
+  .outlet-owner-container h3 {
+    font-size: 1.3rem;
+  }
+
+  .outlet-owner-container > p {
+    font-size: 1.05rem;
+    padding: 15px 20px;
+  }
+
+  .outlet-owner-container li {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 18px 20px;
+  }
+
+  .outlet-owner-container li button {
+    width: 100%;
+    padding: 12px 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    padding: 10px;
+  }
+
+  .create-outlet-container,
+  .outlet-owner-container {
+    padding: 25px 15px;
+  }
+
+  .outlet-owner-container h2 {
+    font-size: 1.5rem;
+  }
+
+  .outlet-owner-container h3 {
+    font-size: 1.2rem;
+  }
+
+  .create-outlet-container form,
+  .outlet-owner-container form {
+    padding: 20px 16px;
+    gap: 14px;
+  }
+
+  .outlet-owner-container li {
+    font-size: 1rem;
+    padding: 16px 18px;
+  }
+
+  .outlet-owner-container li button {
+    font-size: 0.85rem;
+    padding: 10px 16px;
+  }
+}
+
+@media (max-width: 360px) {
+  .outlet-owner-container h2 {
+    font-size: 1.3rem;
+  }
+
+  .outlet-owner-container li {
+    font-size: 0.95rem;
+  }
+}
+
+/* ========== ACCESSIBILITY ========== */
+.create-outlet-container input:focus-visible,
+.outlet-owner-container input:focus-visible,
+.outlet-owner-container button:focus-visible {
+  outline: 3px solid #667eea;
+  outline-offset: 2px;
+}
