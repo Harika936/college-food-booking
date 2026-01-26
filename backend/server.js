@@ -3,18 +3,27 @@ const mysql = require("mysql2");
 const cors = require("cors");
 
 const app = express();
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server running on ${PORT}`));
+
 
 // ==================== MIDDLEWARE ====================
 app.use(cors());
 app.use(express.json());
 // ==================== DATABASE CONNECTION ====================
-const db = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "9369", // your MySQL password
-  database: "college_food_app",
+const mysql = require("mysql2");
+
+const db = mysql.createPool({
+  host: process.env.MYSQLHOST,
+  user: process.env.MYSQLUSER,
+  password: process.env.MYSQLPASSWORD,
+  database: process.env.MYSQLDATABASE,
+  port: process.env.MYSQLPORT,
+  waitForConnections: true,
+  connectionLimit: 10
 });
+
+module.exports = db;
 
 db.connect((err) => {
   if (err) {
