@@ -4,15 +4,15 @@ const cors = require("cors");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on ${PORT}`));
 
 
 // ==================== MIDDLEWARE ====================
 app.use(cors());
 app.use(express.json());
 // ==================== DATABASE CONNECTION ====================
-const mysql = require("mysql2");
 
+
+// ==================== DATABASE CONNECTION ====================
 const db = mysql.createPool({
   host: process.env.MYSQLHOST,
   user: process.env.MYSQLUSER,
@@ -23,15 +23,17 @@ const db = mysql.createPool({
   connectionLimit: 10
 });
 
-module.exports = db;
-
-db.connect((err) => {
+db.getConnection((err, connection) => {
   if (err) {
     console.error("❌ Database connection failed:", err);
     process.exit(1);
   }
   console.log("✅ Connected to MySQL Database");
+  connection.release();
 });
+
+module.exports = db;
+
 
 /* ========= OWNER ROUTES HERE ========= */
 const transporter = require("./mailer");
