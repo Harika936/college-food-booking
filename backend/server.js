@@ -51,6 +51,15 @@ db.getConnection((err, connection) => {
 
 module.exports = db;
 
+//cors--optional
+const cors = require("cors");
+app.use(cors({
+  origin: "https://college-food-booking-77wd23kfl-setti-harikas-projects.vercel.app",
+  methods: ["GET","POST","PUT","DELETE","OPTIONS"],
+  credentials: true
+}));
+
+
 
 /* ========= OWNER ROUTES HERE ========= */
 const transporter = require("./mailer");
