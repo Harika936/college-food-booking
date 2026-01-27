@@ -12,8 +12,22 @@ const PORT = process.env.PORT || 5000;
 // ==================== MIDDLEWARE ====================
 app.use(cors());
 app.use(express.json());
-// ==================== DATABASE CONNECTION ====================
 
+// //DB-CONNECTION
+// const db = mysql.createConnection({
+//   host: "localhost",
+//   user: "root",
+//   password: "9369", // your MySQL password
+//   database: "college_food_app",
+// });
+
+// db.connect((err) => {
+//   if (err) {
+//     console.error("❌ Database connection failed:", err);
+//     process.exit(1);
+//   }
+//   console.log("✅ Connected to MySQL Database");
+// });
 
 // ==================== DATABASE CONNECTION ====================
 const db = mysql.createPool({
