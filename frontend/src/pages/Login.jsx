@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import "./Login.css";
+const API_URL = import.meta.env.VITE_API_URL;
 
 function Login() {
   const [formData, setFormData] = useState({
@@ -23,7 +24,7 @@ function Login() {
   setMessage("");
 
   try {
-    const res = await axios.post("http://localhost:5000/login", formData);
+    const res = await axios.post(`${API_URL}/login`, formData);
 
     const user = res.data; // ✅ FIX HERE
 

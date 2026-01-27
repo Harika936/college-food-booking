@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./StudentOutlets.css";
+const API_URL = import.meta.env.VITE_API_URL;
 
 function StudentOutlets() {
   const [outlets, setOutlets] = useState([]);
@@ -24,7 +25,7 @@ function StudentOutlets() {
 
   const fetchOrders = async () => {
     try {
-      const res = await axios.get(`http://localhost:5000/student/orders/${user.user_id}`);
+      const res = await axios.get(`${API_URL}/outlets`);
       setOrders(res.data);
     } catch (err) {
       console.error("Failed to fetch orders:", err);
@@ -33,7 +34,9 @@ function StudentOutlets() {
 
   const fetchOutlets = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/outlets");
+      const res = await axios.get(
+        `${API_URL}/student/orders/${user.user_id}`
+      );
       setOutlets(res.data);
       setLoading(false);
     } catch (err) {
@@ -60,7 +63,7 @@ function StudentOutlets() {
   // };
   const enterOutlet = async (outletId) => {
   try {
-    const res = await axios.get(`http://localhost:5000/menu/${outletId}`);
+    const res = await axios.get(`${API_URL}/menu/${outletId}`);
     setMenuItems(res.data);
     const outlet = outlets.find(o => o.outlet_id === outletId);
     setSelectedOutlet(outlet);
@@ -122,7 +125,7 @@ const getItemQty = (itemId) => {
   const placeOrder = async () => {
     if (cart.length === 0) return alert("Cart is empty!");
     try {
-      const res = await axios.post("http://localhost:5000/student/order", {
+      const res = await axios.post(`${API_URL}/student/order`, {
         user_id: user.user_id,
         outlet_id: selectedOutlet.outlet_id,
         items: cart.map(i => ({ item_id: i.item_id, quantity: i.quantity }))
@@ -139,7 +142,9 @@ const getItemQty = (itemId) => {
   // Fetch previous orders
   const fetchOrders = async () => {
     try {
-      const res = await axios.get(`http://localhost:5000/student/orders/${user.user_id}`);
+      const res = await axios.get(
+  `${API_URL}/student/orders/${user.user_id}`
+);
       setOrders(res.data);
     } catch (err) {
       console.error(err);

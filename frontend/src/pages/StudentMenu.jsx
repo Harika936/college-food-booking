@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import "./StudentMenu.css";
+const API_URL = import.meta.env.VITE_API_URL;
 
 function StudentMenu() {
   const { outletId } = useParams();
@@ -30,10 +31,14 @@ function StudentMenu() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const outletRes = await axios.get(`http://localhost:5000/outlets/${outletId}`);
+        const outletRes = await axios.get(
+          `${API_URL}/outlets/${outletId}`
+        );
         setOutlet(Array.isArray(outletRes.data) ? outletRes.data[0] : outletRes.data);
 
-        const menuRes = await axios.get(`http://localhost:5000/menu/${outletId}`);
+        const menuRes = await axios.get(
+          `${API_URL}/menu/${outletId}`
+        );
         const availableItems = (menuRes.data || []).filter((item) => item.availability);
         setMenuItems(availableItems);
         setFilteredItems(availableItems);

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./Outlets.css";
+const API_URL = import.meta.env.VITE_API_URL;
+
 
 function Outlets() {
   const navigate = useNavigate();
@@ -19,7 +21,8 @@ function Outlets() {
 
   const fetchOutlets = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/outlets");
+      const res = await axios.get(`${API_URL}/outlets`);
+
       setOutlets(res.data);
     } catch (err) {
       console.error("Error fetching outlets:", err);
@@ -42,7 +45,8 @@ function Outlets() {
     setMessage("");
 
     try {
-      const res = await axios.post("http://localhost:5000/outlets", newOutlet);
+      const res = await axios.post(`${API_URL}/outlets`, newOutlet);
+
       setMessage(res.data.message || "Outlet added successfully!");
       setMessageType("success");
       setNewOutlet({ outlet_name: "", location: "", opening_time: "", closing_time: "" });

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./OutletOwnerMenu.css";
+const API_URL = import.meta.env.VITE_API_URL;
+
 
 function OutletOwnerMenu() {
   const navigate = useNavigate();
@@ -38,7 +40,7 @@ function OutletOwnerMenu() {
     try {
       if (editingItemId) {
         // Update menu item
-        await axios.put(`http://localhost:5000/menu/${editingItemId}`, {
+        await axios.put(`${API_URL}/menu/${editingItemId}` ,{
           name: menuForm.name,
           price: parseFloat(menuForm.price),
           availability: menuForm.availability ? 1 : 0,
@@ -52,7 +54,7 @@ function OutletOwnerMenu() {
         alert("Menu item updated successfully!");
       } else {
         // Add new menu item
-        const res = await axios.post("http://localhost:5000/menu", {
+        const res =await axios.post(`${API_URL}/menu`, {
           outlet_id: outlet.outlet_id,
           name: menuForm.name,    // match backend
           price: parseFloat(menuForm.price),
@@ -83,7 +85,7 @@ function OutletOwnerMenu() {
   const handleDeleteMenuItem = async (item_id) => {
     if (!window.confirm("Are you sure you want to delete this menu item?")) return;
     try {
-      await axios.delete(`http://localhost:5000/menu/${item_id}`);
+      await axios.delete(`${API_URL}/menu/${item_id}`);
       setMenuItems(menuItems.filter(item => item.item_id !== item_id));
       alert("Menu item deleted successfully!");
     } catch (err) {
@@ -108,7 +110,7 @@ function OutletOwnerMenu() {
   const handleCreateOutlet = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:5000/outlets", {
+      const res = await axios.post(`${API_URL}/outlets`, {
         ...outletForm,
         admin_id: user.user_id,
       });
@@ -130,14 +132,18 @@ function OutletOwnerMenu() {
 
     const fetchOutletAndMenu = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/outlets/owner/${user.user_id}`);
+        const res = await axios.get(
+          `${API_URL}/outlets/owner/${user.user_id}`
+        );
         if (res.data) {
           setOutlet(res.data);
           const updatedUser = { ...user, outlet_id: res.data.outlet_id };
           localStorage.setItem("user", JSON.stringify(updatedUser));
 
           // Fetch menu items
-          const menuRes = await axios.get(`http://localhost:5000/menu/${res.data.outlet_id}`);
+          const menuRes = await axios.get(
+            `${API_URL}/menu/${res.data.outlet_id}`
+          );
           setMenuItems(menuRes.data.map(item => ({
             item_id: item.item_id,
             name: item.name || item.item_name,
@@ -268,3 +274,4 @@ function OutletOwnerMenu() {
 
 
 export default OutletOwnerMenu;
+

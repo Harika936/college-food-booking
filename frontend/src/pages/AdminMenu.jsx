@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./AdminMenu.css";
+const API_URL = import.meta.env.VITE_API_URL;
+
 
 function AdminMenu() {
   const [outlets, setOutlets] = useState([]);
@@ -36,7 +38,7 @@ function AdminMenu() {
     // Fetch outlets
     const fetchOutlets = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/outlets");
+        const response = await axios.get(`${API_URL}/outlets`);
         setOutlets(response.data);
         setLoading(false);
       } catch (err) {
@@ -52,7 +54,7 @@ function AdminMenu() {
   // Fetch menu items for selected outlet
   const fetchMenuItems = async (outletId) => {
     try {
-      const response = await axios.get(`http://localhost:5000/menu/${outletId}`);
+      const response = await axios.get(`${API_URL}/menu/${outletId}`);
       setMenuItems(response.data);
     } catch (err) {
       console.error("Error fetching menu items:", err);
@@ -85,8 +87,7 @@ function AdminMenu() {
     try {
       console.log("Adding menu item:", formData);
 
-      const response = await axios.post(
-        `http://localhost:5000/menu/${selectedOutlet.outlet_id}`,
+      const response = await axios.post(`${API_URL}/menu/${selectedOutlet.outlet_id}`,
         {
           item_name: formData.item_name,
           price: parseFloat(formData.price),
@@ -127,8 +128,7 @@ function AdminMenu() {
     if (!selectedOutlet || !editingItem) return;
 
     try {
-      await axios.put(
-        `http://localhost:5000/menu/${selectedOutlet.outlet_id}/${editingItem.item_id}`,
+      await axios.put(`${API_URL}/menu/${selectedOutlet.outlet_id}/${editingItem.item_id}`,
         {
           item_name: formData.item_name,
           price: parseFloat(formData.price),
@@ -170,9 +170,7 @@ function AdminMenu() {
     if (!selectedOutlet) return;
 
     try {
-      await axios.delete(
-        `http://localhost:5000/menu/${selectedOutlet.outlet_id}/${itemId}`
-      );
+      await axios.delete(`${API_URL}/menu/${selectedOutlet.outlet_id}/${itemId}`)
 
       setMenuItems(menuItems.filter((item) => item.item_id !== itemId));
       setMessage("Menu item deleted successfully!");

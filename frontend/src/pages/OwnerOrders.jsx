@@ -2,6 +2,8 @@ import React, { useEffect, useState, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
+const API_URL = import.meta.env.VITE_API_URL;
+
 
 
 function OwnerOrders() {
@@ -14,8 +16,9 @@ function OwnerOrders() {
 
     try {
       const res = await axios.get(
-        `http://localhost:5000/api/owner/orders/${admin.outlet_id}`
-      );
+  `${API_URL}/api/owner/orders/${admin.outlet_id}`
+);
+
       console.log("Fetched orders:", res.data); // debug
       setOrders(res.data);
     } catch (err) {
@@ -54,9 +57,10 @@ function OwnerOrders() {
 const updateStatus = async (orderId, newStatus) => {
   try {
     await axios.put(
-      `http://localhost:5000/api/owner/orders/${orderId}/status`,
-      { status: newStatus }
-    );
+  `${API_URL}/api/owner/orders/${orderId}/status`,
+  { status: newStatus }
+);
+
 
     toast.success(`Order moved to ${newStatus}`);
     fetchOrders(); // enough

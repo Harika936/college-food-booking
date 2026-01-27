@@ -3,6 +3,9 @@ const mysql = require("mysql2");
 const cors = require("cors");
 
 const app = express();
+app.get("/", (req, res) => {
+  res.send("✅ Backend is running!");
+});
 const PORT = process.env.PORT || 5000;
 
 
