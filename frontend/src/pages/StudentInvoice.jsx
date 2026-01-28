@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import "./StudentInvoice.css";
-const API_URL = import.meta.env.VITE_API_URL;
+axios.defaults.baseURL = import.meta.env.VITE_API_URL;
 
 
 function StudentInvoice() {
@@ -13,7 +13,7 @@ function StudentInvoice() {
 useEffect(() => {
   if (!orderId) return; // ⛔ STOP API CALL
   
-  axios.get(`${API_URL}/api/student/invoice/${orderId}`)
+  axios.get(`/api/student/invoice/${orderId}`)
 
     .then(res => setInvoice(res.data))
     .catch(err => console.error(err));
