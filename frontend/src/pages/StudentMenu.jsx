@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import "./StudentMenu.css";
-const API_URL = import.meta.env.VITE_API_URL;
+axios.defaults.baseURL = import.meta.env.VITE_API_URL;
 
 function StudentMenu() {
   const { outletId } = useParams();
@@ -37,7 +37,7 @@ function StudentMenu() {
         setOutlet(Array.isArray(outletRes.data) ? outletRes.data[0] : outletRes.data);
 
         const menuRes = await axios.get(
-          `${API_URL}/menu/${outletId}`
+          `/menu/${outletId}`
         );
         const availableItems = (menuRes.data || []).filter((item) => item.availability);
         setMenuItems(availableItems);
