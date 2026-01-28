@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
-const API_URL = import.meta.env.VITE_API_URL;
+axios.defaults.baseURL = import.meta.env.VITE_API_URL;
 
 
 
@@ -16,7 +16,7 @@ function OwnerOrders() {
 
     try {
       const res = await axios.get(
-  `${API_URL}/api/owner/orders/${admin.outlet_id}`
+  `/api/owner/orders/${admin.outlet_id}`
 );
 
       console.log("Fetched orders:", res.data); // debug
@@ -57,7 +57,7 @@ function OwnerOrders() {
 const updateStatus = async (orderId, newStatus) => {
   try {
     await axios.put(
-  `${API_URL}/api/owner/orders/${orderId}/status`,
+  `/api/owner/orders/${orderId}/status`,
   { status: newStatus }
 );
 
