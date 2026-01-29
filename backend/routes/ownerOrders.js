@@ -80,12 +80,14 @@ module.exports = (db, transporter) => {
   // ================= UPDATE ORDER STATUS =================
   router.put("/owner/orders/:order_id/status", (req, res) => {
     const { order_id } = req.params;
-    const { status } = req.body;
+    const rawStatus = req.body.status;
+    const status = rawStatus.trim().toLowerCase();
+
 
     console.log(`🔄 Updating order ${order_id} to: ${status}`);
 
     // Validate status
-    const validStatuses = ['Placed', 'Preparing', 'Ready', 'Completed','Archived'];
+    const validStatuses = ['placed', 'preparing', 'ready', 'completed', 'archived'];
     if (!validStatuses.includes(status)) {
       return res.status(400).json({ 
         error: `Invalid status. Must be one of: ${validStatuses.join(', ')}` 
@@ -93,7 +95,7 @@ module.exports = (db, transporter) => {
     }
 
     db.query(
-      "UPDATE orders SET status=? WHERE order_id=?",
+     "UPDATE orders SET status=? WHERE order_id=?",
       [status, order_id],
       (err, result) => {
         if (err) {
@@ -108,7 +110,7 @@ module.exports = (db, transporter) => {
         console.log(`✅ Order ${order_id} updated to ${status}`);
 
         // Send email only when status is "Ready" or "Completed"
-        if (status === "Ready" || status === "Completed") {
+        if (status === "ready" || status === "completed") {
           const emailQuery = `
             SELECT u.email, u.name, o.order_id
             FROM orders o
@@ -124,11 +126,11 @@ module.exports = (db, transporter) => {
 
             const { email, name } = result[0];
 
-            const emailSubject = status === "Ready" 
+            const emailSubject = status === "ready" 
               ? "🍽️ Your Order is Ready!" 
               : "✅ Order Completed!";
 
-            const emailBody = status === "Ready"
+            const emailBody = status === "ready"
               ? `<h3>Hello ${name},</h3>
                  <p>Your order <b>#${order_id}</b> is</p>
                  <h2>✅ READY TO COLLECT</h2>
