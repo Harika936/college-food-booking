@@ -549,7 +549,7 @@ app.get("/api/owner/orders/:outlet_id", (req, res) => {
           oi.price,
           i.name as item_name
         FROM order_items oi
-        LEFT JOIN items i ON oi.item_id = i.item_id
+        LEFT JOIN menu_items i ON oi.item_id = i.item_id
         WHERE oi.order_id = ?
       `;
 
