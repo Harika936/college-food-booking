@@ -76,6 +76,7 @@ module.exports = (db, transporter) => {
       });
     });
   });
+console.log("📌 Status after trim:", status);  // add this
 
   // ================= UPDATE ORDER STATUS =================
   router.put("/owner/orders/:order_id/status", (req, res) => {
@@ -111,6 +112,7 @@ module.exports = (db, transporter) => {
 
         // Send email only when status is "Ready" or "Completed"
         if (status === "ready" || status === "completed") {
+          console.log("📧 Email condition matched for order:", order_id);  // add this
           const emailQuery = `
             SELECT u.email, u.name, o.order_id
             FROM orders o
@@ -119,6 +121,10 @@ module.exports = (db, transporter) => {
           `;
 
           db.query(emailQuery, [order_id], (err2, result) => {
+            console.log("📧 Email query result:", result);  // add this
+            if (err2) console.error("❌ Email fetch failed:", err2);
+            if (result.length === 0) console.error("❌ No user found for order:", order_id);
+
             if (err2 || result.length === 0) {
               console.error("❌ Email fetch failed:", err2);
               return res.json({ message: "Order updated but email failed" });
@@ -139,9 +145,20 @@ module.exports = (db, transporter) => {
                  <p>Your order <b>#${order_id}</b> has been</p>
                  <h2>✅ COMPLETED</h2>
                  <p>Thank you for your order!</p>`;
+            console.log("📨 Sending mail to:", email);  // add this
+
 
             transporter.sendMail(
               {
+                (err3, info) => {
+  if (err3) {
+    console.error("❌ Email send failed:", err3);
+    return res.json({ message: "Order updated but email failed" });
+  }
+  console.log("✅ Email sent:", info.response);  // add this
+  res.json({ message: "Order updated & email sent", success: true });
+}
+
                 from: "College Food App <harikasetti936@gmail.com>",
                 to: email,
                 subject: emailSubject,
