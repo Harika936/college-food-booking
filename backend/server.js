@@ -366,7 +366,7 @@ app.post("/student/order", (req, res) => {
 
     // Insert into orders
     db.query(
-      "INSERT INTO orders (user_id, outlet_id, total_amount, status) VALUES (?, ?, ?, 'PLACED')"
+      "INSERT INTO orders (user_id, outlet_id, total_amount, status) VALUES (?, ?, ?, 'Placed')"
 ,
       [user_id, outlet_id, total],
       (err, result) => {
