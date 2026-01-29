@@ -76,14 +76,14 @@ module.exports = (db, transporter) => {
       });
     });
   });
-console.log("📌 Status after trim:", status);  // add this
+
 
   // ================= UPDATE ORDER STATUS =================
   router.put("/owner/orders/:order_id/status", (req, res) => {
     const { order_id } = req.params;
     const rawStatus = req.body.status;
     const status = rawStatus.trim().toLowerCase();
-
+console.log("📌 Status after trim:", status);  // add this
 
     console.log(`🔄 Updating order ${order_id} to: ${status}`);
 
@@ -150,28 +150,20 @@ console.log("📌 Status after trim:", status);  // add this
 
             transporter.sendMail(
               {
-                (err3, info) => {
-  if (err3) {
-    console.error("❌ Email send failed:", err3);
-    return res.json({ message: "Order updated but email failed" });
-  }
-  console.log("✅ Email sent:", info.response);  // add this
-  res.json({ message: "Order updated & email sent", success: true });
-}
-
                 from: "College Food App <harikasetti936@gmail.com>",
                 to: email,
                 subject: emailSubject,
                 html: emailBody
               },
-              err3 => {
-                if (err3) {
-                  console.error("❌ Email send failed:", err3);
-                  return res.json({ 
-                    message: "Order updated but email failed",
-                    success: true 
-                  });
-                }
+              function (err3, info) {
+  if (err3) { ... }
+  console.log("📧 Email sent info:", info.response); // optional info log
+  res.json({ 
+    message: "Order updated & email sent",
+    success: true 
+  });
+}
+
 
                 console.log(`📧 Email sent to ${email}`);
                 res.json({ 
