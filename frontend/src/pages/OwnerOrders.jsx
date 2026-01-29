@@ -106,10 +106,11 @@ const filteredOrders = orders.filter(
           )}
 
           {status?.toLowerCase() === "completed" && (
-            <button onClick={() => updateStatus(order.order_id, "Completed")}>
+            <button onClick={() => updateStatus(order.order_id, "Archived")}>
               Archive Order
             </button>
           )}
+
         </div>
       ))}
     </div>
