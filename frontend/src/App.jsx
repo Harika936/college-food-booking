@@ -40,19 +40,17 @@ function App() {
     {/* <Route path="/owner-menu" element={<OutletOwnerMenu />} /> */}
 
     {/* Owner Layout with nested routes */}
-   // Owner Layout with nested routes
-<Route 
-  path="/owner" 
-  element={
-    <ProtectedOwnerRoute>
-      <OwnerLayout />
-    </ProtectedOwnerRoute>
-  }
->
-  <Route index element={<Navigate to="orders/placed" />} /> {/* default */}
+   {/*  Owner Layout with nested routes */}
+<Route path="/owner" element={
+  <ProtectedOwnerRoute>
+    <OwnerLayout />
+  </ProtectedOwnerRoute>
+}>
+  <Route index element={<Navigate to="orders/Placed" />} />
   <Route path="menu" element={<OutletOwnerMenu />} />
   <Route path="orders/:status" element={<OwnerOrders />} />
 </Route>
+
 
 
 
