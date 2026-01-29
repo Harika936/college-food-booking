@@ -501,78 +501,7 @@ app.get("/orders/:user_id", (req, res) => {
 //==================== OWNER ROUTES ====================
 
 
-app.get("/api/owner/orders/:outlet_id", (req, res) => {
-  const { outlet_id } = req.params;
 
-  console.log(`🔍 Fetching orders for outlet_id: ${outlet_id}`);
-
-  // First, get all orders for this outlet
-  const orderQuery = `
-    SELECT 
-      o.order_id,
-      o.user_id,
-      o.outlet_id,
-      o.total_amount,
-      o.status,
-      o.order_time,
-      u.name as student_name,
-      u.email as student_email
-    FROM orders o
-    LEFT JOIN users u ON o.user_id = u.user_id
-    WHERE o.outlet_id = ?
-    ORDER BY o.order_time DESC
-  `;
-
-  db.query(orderQuery, [outlet_id], (err, orders) => {
-    if (err) {
-      console.error("❌ Error fetching orders:", err);
-      return res.status(500).json({ error: "Failed to fetch orders" });
-    }
-
-    console.log(`✅ Found ${orders.length} orders for outlet ${outlet_id}`);
-
-    // If no orders, return empty array
-    if (orders.length === 0) {
-      return res.json([]);
-    }
-
-    // Now fetch items for each order
-    let completedOrders = 0;
-
-    orders.forEach((order, index) => {
-      const itemQuery = `
-        SELECT 
-          oi.order_item_id,
-          oi.order_id,
-          oi.item_id,
-          oi.quantity,
-          oi.price,
-          i.name as item_name
-        FROM order_items oi
-        LEFT JOIN menu_items i ON oi.item_id = i.item_id
-        WHERE oi.order_id = ?
-      `;
-
-      db.query(itemQuery, [order.order_id], (err2, items) => {
-        if (err2) {
-          console.error(`❌ Error fetching items for order ${order.order_id}:`, err2);
-          orders[index].items = [];
-        } else {
-          console.log(`📦 Order ${order.order_id} has ${items.length} items`);
-          orders[index].items = items;
-        }
-
-        completedOrders++;
-
-        // Once all orders have their items, send the response
-        if (completedOrders === orders.length) {
-          console.log(`✅ Sending ${orders.length} orders with items`);
-          res.json(orders);
-        }
-      });
-    });
-  });
-});
 //Invoice receipt
 // ================= STUDENT INVOICE =================
 app.get("/api/student/invoice/:order_id", (req, res) => {
