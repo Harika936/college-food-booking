@@ -73,9 +73,13 @@ const updateStatus = async (orderId, newStatus) => {
 
 
   // use "Placed", "Preparing", "Ready", "Completed" consistently
-const filteredOrders = orders.filter(
-  order => order.status?.toLowerCase() === status?.toLowerCase()
-);
+const filteredOrders = orders.filter(order => {
+  if (status?.toLowerCase() === "placed") {
+    return order.status === null || order.status?.toLowerCase() === "placed";
+  }
+  return order.status?.toLowerCase() === status?.toLowerCase();
+});
+
 
   return (
     <div>
