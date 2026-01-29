@@ -17,15 +17,15 @@ module.exports = (db, transporter) => {
         o.user_id,
         o.outlet_id,
         o.total_amount,
-        o.status,
+        TRIM(LOWER(o.status)) AS status,
         o.order_time,
-        u.name as student_name,
-        u.email as student_email
+        u.name AS student_name,
+        u.email AS student_email
       FROM orders o
       LEFT JOIN users u ON o.user_id = u.user_id
       WHERE o.outlet_id = ?
       ORDER BY o.order_time DESC
-    `;
+ `;
 
     db.query(orderQuery, [outlet_id], (err, orders) => {
       if (err) {
