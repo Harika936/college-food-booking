@@ -1,11 +1,9 @@
 const express = require("express");
 const mysql = require("mysql2");
 const cors = require("cors");
+const nodemailer = require("nodemailer");
 
 const app = express();
-app.get("/", (req, res) => {
-  res.send("✅ Backend is running!");
-});
 const PORT = process.env.PORT || 5000;
 
 
@@ -51,12 +49,20 @@ db.getConnection((err, connection) => {
 
 module.exports = db;
 
-//cors--optional
-
-
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: "harikasetti936@gmail.com",
+    pass: process.env.GMAIL_APP_PASSWORD // use Gmail App Password
+  }
+});
+// Root test route
+app.get("/", (req, res) => {
+  res.send("✅ Backend is running!");
+});
 
 /* ========= OWNER ROUTES HERE ========= */
-const transporter = require("./mailer");
+
 const ownerOrdersRoutes = require("./routes/ownerOrders");
 app.use("/api", ownerOrdersRoutes(db, transporter));
 
