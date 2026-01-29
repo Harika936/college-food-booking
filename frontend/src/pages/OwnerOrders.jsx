@@ -79,6 +79,10 @@ const filteredOrders = orders.filter(order => {
   }
   return order.status?.toLowerCase() === status?.toLowerCase();
 });
+console.log(
+  "Placed orders count:",
+  orders.filter(o => o.status === "Placed").length
+);
 
 
   return (
