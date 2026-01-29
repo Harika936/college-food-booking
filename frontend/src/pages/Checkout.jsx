@@ -31,34 +31,58 @@ function Checkout() {
     0
   );
 
+  // const placeOrder = async () => {
+  //   try {
+  //     const payload = {
+  //       user_id: user.user_id,
+  //       outlet_id: outletId,
+  //       total_amount: totalAmount,
+  //       items: cart.map(item => ({
+  //         item_id: item.item_id,
+  //         quantity: item.quantity,
+  //         price: item.price
+  //       }))
+  //     };
+
+  //     const res = await axios.post(`${API_URL}/orders`, payload);
+
+  //     if (!res.data.orderId) {
+  //       alert("Order placed but invoice failed");
+  //       return;
+  //     }
+
+  //     console.log("Order placed successfully:", res.data);
+  //     // Redirect to invoice page
+  //     navigate(`/student/invoice/${res.data.orderId}`);
+  //   } catch (err) {
+  //     console.error("Order placement failed:", err);
+  //     alert("Order failed");
+  //   }
+  // };
   const placeOrder = async () => {
-    try {
-      const payload = {
-        user_id: user.user_id,
-        outlet_id: outletId,
-        total_amount: totalAmount,
-        items: cart.map(item => ({
-          item_id: item.item_id,
-          quantity: item.quantity,
-          price: item.price
-        }))
-      };
+  try {
+    const payload = {
+      user_id: user.user_id,
+      outlet_id: outletId,
+      items: cart.map(item => ({
+        item_id: item.item_id,
+        quantity: item.quantity,
+        price: item.price
+      }))
+    };
 
-      const res = await axios.post(`${API_URL}/orders`, payload);
+    const res = await axios.post(`${API_URL}/student/order`, payload);
 
-      if (!res.data.orderId) {
-        alert("Order placed but invoice failed");
-        return;
-      }
+    console.log("Order placed successfully:", res.data);
 
-      console.log("Order placed successfully:", res.data);
-      // Redirect to invoice page
-      navigate(`/student/invoice/${res.data.orderId}`);
-    } catch (err) {
-      console.error("Order placement failed:", err);
-      alert("Order failed");
-    }
-  };
+    // Redirect to invoice page
+    navigate(`/student/invoice/${res.data.order_id}`);
+  } catch (err) {
+    console.error("Order placement failed:", err);
+    alert("Order failed");
+  }
+};
+
 
   return (
     <div className="student-outlets-container">
