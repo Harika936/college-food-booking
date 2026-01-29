@@ -111,75 +111,72 @@ console.log("📌 Status after trim:", status);  // add this
         console.log(`✅ Order ${order_id} updated to ${status}`);
 
         // Send email only when status is "Ready" or "Completed"
-        if (status === "ready" || status === "completed") {
-          console.log("📧 Email condition matched for order:", order_id);  // add this
-          const emailQuery = `
-            SELECT u.email, u.name, o.order_id
-            FROM orders o
-            JOIN users u ON o.user_id = u.user_id
-            WHERE o.order_id = ?
-          `;
+      if (status === "ready" || status === "completed") {
+  console.log("📧 Email condition matched for order:", order_id);
 
-          db.query(emailQuery, [order_id], (err2, result) => {
-            console.log("📧 Email query result:", result);  // add this
-            if (err2) console.error("❌ Email fetch failed:", err2);
-            if (result.length === 0) console.error("❌ No user found for order:", order_id);
+  const emailQuery = `
+    SELECT u.email, u.name, o.order_id
+    FROM orders o
+    JOIN users u ON o.user_id = u.user_id
+    WHERE o.order_id = ?
+  `;
 
-            if (err2 || result.length === 0) {
-              console.error("❌ Email fetch failed:", err2);
-              return res.json({ message: "Order updated but email failed" });
-            }
+  db.query(emailQuery, [order_id], (err2, result) => {
+    if (err2 || result.length === 0) {
+      console.error("❌ Email fetch failed:", err2);
+      return res.json({ message: "Order updated but email failed" });
+    }
 
-            const { email, name } = result[0];
+    const { email, name } = result[0];
 
-            const emailSubject = status === "ready" 
-              ? "🍽️ Your Order is Ready!" 
-              : "✅ Order Completed!";
+    const emailSubject = status === "ready" 
+      ? "🍽️ Your Order is Ready!" 
+      : "✅ Order Completed!";
 
-            const emailBody = status === "ready"
-              ? `<h3>Hello ${name},</h3>
-                 <p>Your order <b>#${order_id}</b> is</p>
-                 <h2>✅ READY TO COLLECT</h2>
-                 <p>Please come and pick it up!</p>`
-              : `<h3>Hello ${name},</h3>
-                 <p>Your order <b>#${order_id}</b> has been</p>
-                 <h2>✅ COMPLETED</h2>
-                 <p>Thank you for your order!</p>`;
-            console.log("📨 Sending mail to:", email);  // add this
+    const emailBody = status === "ready"
+      ? `<h3>Hello ${name},</h3>
+         <p>Your order <b>#${order_id}</b> is</p>
+         <h2>✅ READY TO COLLECT</h2>
+         <p>Please come and pick it up!</p>`
+      : `<h3>Hello ${name},</h3>
+         <p>Your order <b>#${order_id}</b> has been</p>
+         <h2>✅ COMPLETED</h2>
+         <p>Thank you for your order!</p>`;
 
+    console.log("📨 Sending mail to:", email);
 
-            transporter.sendMail(
-              {
-                from: "College Food App <harikasetti936@gmail.com>",
-                to: email,
-                subject: emailSubject,
-                html: emailBody
-              },
-              function (err3, info) {
-  if (err3) { ... }
-  console.log("📧 Email sent info:", info.response); // optional info log
+    transporter.sendMail(
+      {
+        from: "College Food App <harikasetti936@gmail.com>",
+        to: email,
+        subject: emailSubject,
+        html: emailBody
+      },
+      function (err3, info) {
+        if (err3) {
+          console.error("❌ Email send failed:", err3);
+          return res.json({ 
+            message: "Order updated but email failed",
+            success: true
+          });
+        }
+
+        console.log("📧 Email sent info:", info.response);
+        res.json({ 
+          message: "Order updated & email sent",
+          success: true
+        });
+      }
+    );
+  });
+} else {
+  // For Placed/Preparing status, no email needed
   res.json({ 
-    message: "Order updated & email sent",
+    message: "Order status updated",
     success: true 
   });
 }
 
-
-                console.log(`📧 Email sent to ${email}`);
-                res.json({ 
-                  message: "Order updated & email sent",
-                  success: true 
-                });
-              }
-            );
-          });
-        } else {
-          // For Placed/Preparing status, no email needed
-          res.json({ 
-            message: "Order status updated",
-            success: true 
-          });
-        }
       }
     );
   });
