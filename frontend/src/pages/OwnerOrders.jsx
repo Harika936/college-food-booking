@@ -70,15 +70,20 @@ const updateStatus = async (orderId, newStatus) => {
     console.error("Update error:", err.response || err.message);
   }
 };
-console.log("All orders received:", orders.map(o => ({ id: o.order_id, status: o.status })));
 console.log("Filtering for status:", status);
+console.log("All orders received:", orders);
+
 
 
   // use "Placed", "Preparing", "Ready", "Completed" consistently
 const filteredOrders = orders.filter(order => {
-  if (!order.status) return false; // skip if null
-  return order.status.toLowerCase() === status?.toLowerCase();
+  if (!order.status) return false;
+  const orderStatus = order.status.trim().toLowerCase();
+  const filterStatus = status?.trim().toLowerCase();
+
+  return orderStatus === filterStatus;
 });
+
 
 
 
