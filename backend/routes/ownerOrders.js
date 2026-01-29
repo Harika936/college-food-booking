@@ -85,7 +85,7 @@ module.exports = (db, transporter) => {
     console.log(`🔄 Updating order ${order_id} to: ${status}`);
 
     // Validate status
-    const validStatuses = ['Placed', 'Preparing', 'Ready', 'Completed', 'Archived'];
+    const validStatuses = ['Placed', 'Preparing', 'Ready', 'Completed'];
     if (!validStatuses.includes(status)) {
       return res.status(400).json({ 
         error: `Invalid status. Must be one of: ${validStatuses.join(', ')}` 
