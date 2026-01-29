@@ -110,16 +110,23 @@ const filteredOrders = orders.filter(order => {
           )}
 
           {status?.toLowerCase() === "preparing" && (
-            <button onClick={() => updateStatus(order.order_id, "Completed")}>
+            <button onClick={() => updateStatus(order.order_id, "Ready")}>
               Prepared
             </button>
           )}
 
+          {status?.toLowerCase() === "ready" && (
+            <button onClick={() => updateStatus(order.order_id, "Completed")}>
+              Collected
+            </button>
+          )}
+          
           {status?.toLowerCase() === "completed" && (
             <button onClick={() => updateStatus(order.order_id, "Archived")}>
               Archive Order
             </button>
           )}
+
 
         </div>
       ))}
